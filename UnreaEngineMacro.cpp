@@ -3,9 +3,7 @@
 #include <vector>
 #include <typeinfo>
 
-// ----------------------
 // Reflection system
-// ----------------------
 
 struct PropertyInfo {
     std::string Name;
@@ -42,10 +40,8 @@ struct PropertyRegistry {
     }
 };
 
-// ----------------------
-// CRTP base class
-// ----------------------
 
+// CRTP base class
 template <typename Derived>
 class Reflectable {
 public:
@@ -59,25 +55,17 @@ public:
     }
 };
 
-// ----------------------
 // UE-style macros
-// ----------------------
-
 // Macro above variable declaration
 #define MYPROPERTY() /* nothing, just marker */
 #define MYPROPERTY_META(meta) /* nothing, just marker */
 
-// ----------------------
-// Example class
-// ----------------------
 
+// Example class
 class Player : public Reflectable<Player> {
 public:
     using DerivedPlaceholder = Player;
-
-    // -------------------
     // UE-style properties
-    // -------------------
     MYPROPERTY()
     int Health = 100;
 
@@ -87,9 +75,7 @@ public:
     MYPROPERTY()
     float Speed = 2.0;
 
-    // -------------------
     // Constructor registers properties automatically
-    // -------------------
     Player() {
         GetRegistry().Add("Health", typeid(Health).name(), "VisibleAnywhere", &Health);
         GetRegistry().Add("Name", typeid(Name).name(), "EditAnywhere", &Name);
@@ -97,10 +83,7 @@ public:
     }
 };
 
-// ----------------------
 // Main
-// ----------------------
-
 int main() {
     Player p;
 
@@ -118,3 +101,4 @@ int main() {
 
     return 0;
 }
+
